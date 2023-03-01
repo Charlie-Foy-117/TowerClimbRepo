@@ -1,8 +1,10 @@
 #include "Game.h"
+#include "Screen.h"
 
 Game::Game()
 	: window(sf::VideoMode::getDesktopMode(), "Tower Climb", sf::Style::Titlebar | sf::Style::Close)
 	, gameClock()
+	, currentScreen(nullptr)
 {
 	//window setup
 	window.setMouseCursorVisible(false);
@@ -44,6 +46,10 @@ void Game::Update()
 	sf::Time frameTime = gameClock.restart();
 
 	//TODO: Update current screen
+	if (currentScreen)
+	{
+		currentScreen->Update(frameTime);
+	}
 
 	//TODO: Handle changes to other screens
 }
@@ -53,6 +59,10 @@ void Game::Draw()
 	window.clear();
 	
 	//TODO: Draw current screen
+	if (currentScreen)
+	{
+		currentScreen->Draw(window);
+	}
 
 	window.display();
 }
