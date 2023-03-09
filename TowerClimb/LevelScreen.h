@@ -1,6 +1,8 @@
 #pragma once
 #include "Screen.h"
 #include "Player.h"
+#include "Door.h"
+#include "Platform.h"
 #include <SFML/Graphics.hpp>
 
 class LevelScreen :
@@ -16,5 +18,7 @@ public:
 private:
 
     Player player;
+    Platform platform;
+    Door door;
 };
 

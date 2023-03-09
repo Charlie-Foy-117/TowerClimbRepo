@@ -6,5 +6,9 @@ class Platform :
 public:
 
     Platform();
+
+private:
+
+    sf::Vector2f position;
 };
 
