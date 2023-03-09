@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Screen.h"
 #include "LevelScreen.h"
+#include "TitleScreen.h"
 
 Game::Game()
 	: window(sf::VideoMode::getDesktopMode(), "Tower Climb", sf::Style::Titlebar | sf::Style::Close)
@@ -10,7 +11,7 @@ Game::Game()
 	//window setup
 	window.setMouseCursorVisible(false);
 
-	//TODO: Setup screens
+	//Setup screens
 	currentScreen = new LevelScreen(this);
 }
 

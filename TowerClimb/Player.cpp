@@ -4,12 +4,16 @@
 enum class PhysicsType
 {
 	FORWARD_EULER,
-	BACKWARD_EULER
+	BACKWARD_EULER,
+	SYMPLECTIC_EULER,
+	POSITION_VERLET,
+	VELOCITY_VERLET
 };
 
 Player::Player()
 	: SpriteObject()
 	, position(100, 300)
+	, prePosition(100, 300)
 	, velocity()
 	, acceleration()
 {
@@ -20,7 +24,7 @@ Player::Player()
 void Player::Update(sf::Time frameTime)
 {
 	const float DRAG = 0.99f;
-	const PhysicsType physics = PhysicsType::BACKWARD_EULER;
+	const PhysicsType physics = PhysicsType::VELOCITY_VERLET;
 
 	switch (physics)
 	{
@@ -51,6 +55,58 @@ void Player::Update(sf::Time frameTime)
 
 			velocity = velocity + acceleration * frameTime.asSeconds();
 			position = position + velocity * frameTime.asSeconds();
+		}
+		break;
+
+	case PhysicsType::SYMPLECTIC_EULER:
+		{
+			//SEMI-IMPLICIT / SYMPLECTIC EULER
+		
+			velocity = velocity + acceleration * frameTime.asSeconds();
+
+			//drag
+			velocity = velocity * DRAG;
+
+			position = position + velocity * frameTime.asSeconds();
+			UpdateAcceleration();
+		}
+		break;
+
+	case PhysicsType::POSITION_VERLET:
+		{
+			//POSITION_VERLET
+
+			//Update acceleration
+			UpdateAcceleration();
+
+			sf::Vector2f lastFramePos = position;
+
+			//calculate current frames position
+			position = 2.0f * position - prePosition + acceleration * frameTime.asSeconds() * frameTime.asSeconds();
+
+			//two frames ago (for next frame)
+			prePosition = lastFramePos;
+		}
+		break;
+
+	case PhysicsType::VELOCITY_VERLET:
+		{
+			//VELOCITY VERLET
+			//get half frame velocity using
+			//previous frame's acceleration
+			sf::Vector2f halfFrameVelocity = velocity + acceleration * frameTime.asSeconds() / 2.0f;
+
+			//get new frame's position using half frame velocity
+			position = position + halfFrameVelocity * frameTime.asSeconds();
+
+			//update our current acceleration
+			UpdateAcceleration();
+
+			//get new frame's velocity using half frame velocity and updated acceleration
+			velocity = halfFrameVelocity + acceleration * frameTime.asSeconds() / 2.0f;
+
+			//drag
+			velocity = velocity * DRAG;
 		}
 		break;
 

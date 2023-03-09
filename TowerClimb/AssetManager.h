@@ -8,15 +8,15 @@ class AssetManager
 public:
 
 	static sf::Texture& RequestTexture(std::string textureName);
-	//static sf::Font& RequestFont(std::string assetName);
-	//static sf::SoundBuffer& RequestSoundBuffer(std::string assetName);
+	static sf::Font& RequestFont(std::string assetName);
+	static sf::SoundBuffer& RequestSoundBuffer(std::string assetName);
 
 	static void DestroyAllAssets();
 
 private:
 
 	static std::map<std::string, sf::Texture> textures;
-	//static std::map<std::string, sf::Font> fonts;
-	//static std::map<std::string, sf::SoundBuffer> soundBuffer;
+	static std::map<std::string, sf::Font> fonts;
+	static std::map<std::string, sf::SoundBuffer> soundBuffer;
 };
 
