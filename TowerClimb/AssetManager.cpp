@@ -20,15 +20,17 @@ sf::Texture& AssetManager::RequestTexture(std::string textureName)
 	}
 }
 
-sf::Font& AssetManager::RequestFont(std::string assetName)
+/*sf::Font& AssetManager::RequestFont(std::string assetName)
 {
 	// TODO: insert return statement here
+	return;
 }
 
-sf::SoundBuffer& AssetManager::RequestSoundBuffer(std::string assetName)
+//sf::SoundBuffer& AssetManager::RequestSoundBuffer(std::string assetName)
 {
 	// TODO: insert return statement here
-}
+	return;
+}*/
 
 void AssetManager::DestroyAllAssets()
 {

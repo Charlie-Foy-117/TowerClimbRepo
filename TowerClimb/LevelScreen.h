@@ -1,5 +1,6 @@
 #pragma once
 #include "Screen.h"
+#include "Player.h"
 #include <SFML/Graphics.hpp>
 
 class LevelScreen :
@@ -14,6 +15,6 @@ public:
 
 private:
 
-    sf::Sprite tempSprite;
+    Player player;
 };
 
