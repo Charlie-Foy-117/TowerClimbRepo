@@ -20,6 +20,7 @@ Player::Player()
 
 	collisionOffset = sf::Vector2f(0, 25);
 	collisionScale = sf::Vector2f(0.5f, 0.5f);
+	collisionType = CollisionType::CIRCLE;
 }
 
 void Player::Update(sf::Time frameTime)
