@@ -23,7 +23,7 @@ Player::Player()
 
 void Player::Update(sf::Time frameTime)
 {
-	const float DRAG = 0.99f;
+	const float DRAG = 10.0f;
 	const PhysicsType physics = PhysicsType::VELOCITY_VERLET;
 
 	switch (physics)
@@ -36,7 +36,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = velocity + acceleration * frameTime.asSeconds();
 
 			//Drag
-			velocity = velocity * DRAG;
+			velocity = velocity - velocity * DRAG * frameTime.asSeconds();
 
 			//Update acceleration
 			UpdateAcceleration();
@@ -65,7 +65,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = velocity + acceleration * frameTime.asSeconds();
 
 			//drag
-			velocity = velocity * DRAG;
+			velocity = velocity - velocity * DRAG * frameTime.asSeconds();
 
 			position = position + velocity * frameTime.asSeconds();
 			UpdateAcceleration();
@@ -106,7 +106,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = halfFrameVelocity + acceleration * frameTime.asSeconds() / 2.0f;
 
 			//drag
-			velocity = velocity * DRAG;
+			velocity = velocity - velocity * DRAG * frameTime.asSeconds();
 		}
 		break;
 
@@ -121,7 +121,7 @@ void Player::Update(sf::Time frameTime)
 
 void Player::UpdateAcceleration()
 {
-	const float ACCEL = 2000;
+	const float ACCEL = 10000;
 
 	//Update acceleration
 	acceleration.x = 0;
