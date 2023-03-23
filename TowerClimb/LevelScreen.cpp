@@ -7,7 +7,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, platform()
 	, door()
 {
-	player.SetPosition(500, 500);
+	player.SetPosition(200, 200);
 	platform.SetPosition(200, 400);
 	door.SetPosition(200, 250);
 }

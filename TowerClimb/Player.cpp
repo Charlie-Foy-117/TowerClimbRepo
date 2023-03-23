@@ -40,7 +40,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = velocity + acceleration * frameTime.asSeconds();
 
 			//Drag
-			velocity = velocity - velocity * DRAG * frameTime.asSeconds();
+			velocity.x = velocity.x - velocity.x * DRAG * frameTime.asSeconds();
 
 			//Update acceleration
 			UpdateAcceleration();
@@ -69,7 +69,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = velocity + acceleration * frameTime.asSeconds();
 
 			//drag
-			velocity = velocity - velocity * DRAG * frameTime.asSeconds();
+			velocity.x = velocity.x - velocity.x * DRAG * frameTime.asSeconds();
 
 			SetPosition(GetPosition() + velocity * frameTime.asSeconds());
 			UpdateAcceleration();
@@ -106,20 +106,21 @@ void Player::Update(sf::Time frameTime)
 			velocity = halfFrameVelocity + acceleration * frameTime.asSeconds() / 2.0f;
 
 			//drag
-			velocity = velocity - velocity * DRAG * frameTime.asSeconds();
+			velocity.x = velocity.x - velocity.x * DRAG * frameTime.asSeconds();
 		}
 		break;
 
 	default:
 		break;
-	}
 
-	//two frames ago (for next frame)
-	twoFramesOldPosition = lastFramePos;
+		//two frames ago (for next frame)
+		twoFramesOldPosition = lastFramePos;
+	}
 }
 
 void Player::HandleCollision(SpriteObject other)
 {
+	const float JUMPSPEED = 1000;
 	sf::Vector2f depth = GetCollisionDepth(other);
 	sf::Vector2f newPosition = GetPosition();
 
@@ -127,11 +128,21 @@ void Player::HandleCollision(SpriteObject other)
 	{
 		//move in x direction
 		newPosition.x += depth.x;
+		velocity.x = 0;
+		acceleration.x = 0;
 	}
 	else
 	{
 		//move in y direction
 		newPosition.y += depth.y;
+		velocity.x = 0;
+		acceleration.x = 0;
+
+		//if we collided from above
+		if (depth.y < 0)
+		{
+			velocity.y = -JUMPSPEED;
+		}
 	}
 
 	SetPosition(newPosition);
@@ -140,19 +151,12 @@ void Player::HandleCollision(SpriteObject other)
 void Player::UpdateAcceleration()
 {
 	const float ACCEL = 10000;
+	const float GRAVITY = 1000;
 
 	//Update acceleration
 	acceleration.x = 0;
-	acceleration.y = 0;
+	acceleration.y = GRAVITY;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		acceleration.y = -ACCEL;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		acceleration.y = ACCEL;
-	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		acceleration.x = -ACCEL;
