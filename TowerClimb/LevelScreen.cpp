@@ -4,27 +4,37 @@
 LevelScreen::LevelScreen(Game* newGamePointer)
 	: Screen(newGamePointer)
 	, player()
-	, platform()
+	, testPlatform()
+	, testMovingPlatform(sf::Vector2f(0, 700), sf::Vector2f(1000, 700))
 	, door()
 {
 	player.SetPosition(200, 200);
-	platform.SetPosition(200, 400);
+	testPlatform.SetPosition(200, 400);
+	testMovingPlatform.SetPosition(sf::Vector2f(500, 700));
 	door.SetPosition(200, 250);
 }
 
 void LevelScreen::Update(sf::Time frameTime)
 {
 	player.Update(frameTime);
+	testMovingPlatform.Update(frameTime);
 
 	player.SetColliding(false);
-	platform.SetColliding(false);
+	testPlatform.SetColliding(false);
+	testMovingPlatform.SetColliding(false);
 	door.SetColliding(false);
 
-	if (player.CheckCollision(platform))
+	if (player.CheckCollision(testPlatform))
 	{
 		player.SetColliding(true);
-		platform.SetColliding(true);
-		player.HandleCollision(platform);
+		testPlatform.SetColliding(true);
+		player.HandleCollision(testPlatform);
+	}
+	if (player.CheckCollision(testMovingPlatform))
+	{
+		player.SetColliding(true);
+		testMovingPlatform.SetColliding(true);
+		player.HandleCollision(testMovingPlatform);
 	}
 	if (player.CheckCollision(door))
 	{
@@ -35,7 +45,8 @@ void LevelScreen::Update(sf::Time frameTime)
 
 void LevelScreen::Draw(sf::RenderTarget& target)
 {
-	platform.Draw(target);
+	testPlatform.Draw(target);
+	testMovingPlatform.Draw(target);
 	door.Draw(target);
 	player.Draw(target);
 }

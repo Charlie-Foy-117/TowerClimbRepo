@@ -17,7 +17,7 @@ public:
 	virtual void Draw(sf::RenderTarget& target);
 
 	sf::Vector2f GetPosition();
-	void SetPosition(sf::Vector2f newPosition);
+	virtual void SetPosition(sf::Vector2f newPosition);
 	void SetPosition(float newX, float newY);
 
 	bool CheckCollision(SpriteObject other);

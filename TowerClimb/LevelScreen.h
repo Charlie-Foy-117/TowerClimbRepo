@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Door.h"
 #include "Platform.h"
+#include "MovingPlatform.h"
 #include <SFML/Graphics.hpp>
 
 class LevelScreen :
@@ -18,7 +19,8 @@ public:
 private:
 
     Player player;
-    Platform platform;
+    Platform testPlatform;
+    MovingPlatform testMovingPlatform;
     Door door;
 };
 
