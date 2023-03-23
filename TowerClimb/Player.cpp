@@ -118,7 +118,7 @@ void Player::Update(sf::Time frameTime)
 	}
 }
 
-void Player::HandleCollision(SpriteObject other)
+void Player::HandleCollision(SpriteObject& other)
 {
 	const float JUMPSPEED = 1000;
 	sf::Vector2f depth = GetCollisionDepth(other);

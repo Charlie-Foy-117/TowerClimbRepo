@@ -1,41 +1,55 @@
 #include "LevelScreen.h"
 #include "AssetManager.h"
+#include "Platform.h"
+#include "MovingPlatform.h"
+#include "BreakingPlatform.h"
+#include "DeadlyPlatform.h"
 
 LevelScreen::LevelScreen(Game* newGamePointer)
 	: Screen(newGamePointer)
+	, platformVector()
 	, player()
-	, testPlatform()
-	, testMovingPlatform(sf::Vector2f(0, 700), sf::Vector2f(1000, 700))
 	, door()
 {
 	player.SetPosition(200, 200);
-	testPlatform.SetPosition(200, 400);
-	testMovingPlatform.SetPosition(sf::Vector2f(500, 700));
+
+	platformVector.push_back(new Platform(sf::Vector2f(200, 400)));
+	platformVector.push_back(new MovingPlatform(sf::Vector2f(500, 500), sf::Vector2f(500, 500), sf::Vector2f(700, 500)));
+	platformVector.push_back(new BreakingPlatform(sf::Vector2f(500, 400)));
+	platformVector.push_back(new DeadlyPlatform(sf::Vector2f(700, 400)));
+
+
 	door.SetPosition(200, 250);
 }
 
 void LevelScreen::Update(sf::Time frameTime)
 {
 	player.Update(frameTime);
-	testMovingPlatform.Update(frameTime);
+	
+	for (size_t i = 0; i < platformVector.size(); ++i)
+	{
+		platformVector[i]->Update(frameTime);
+	}
 
 	player.SetColliding(false);
-	testPlatform.SetColliding(false);
-	testMovingPlatform.SetColliding(false);
+
+	for (size_t i = 0; i < platformVector.size(); i++)
+	{
+		platformVector[i]->SetColliding(false);
+	}
 	door.SetColliding(false);
 
-	if (player.CheckCollision(testPlatform))
+	for (size_t i = 0; i < platformVector.size(); i++)
 	{
-		player.SetColliding(true);
-		testPlatform.SetColliding(true);
-		player.HandleCollision(testPlatform);
+		if (platformVector[i]->CheckCollision(player))
+		{
+			player.SetColliding(true);
+			platformVector[i]->SetColliding(true);
+			player.HandleCollision(*platformVector[i]);
+			platformVector[i]->HandleCollision(player);
+		}
 	}
-	if (player.CheckCollision(testMovingPlatform))
-	{
-		player.SetColliding(true);
-		testMovingPlatform.SetColliding(true);
-		player.HandleCollision(testMovingPlatform);
-	}
+	
 	if (player.CheckCollision(door))
 	{
 		player.SetColliding(true);
@@ -45,8 +59,10 @@ void LevelScreen::Update(sf::Time frameTime)
 
 void LevelScreen::Draw(sf::RenderTarget& target)
 {
-	testPlatform.Draw(target);
-	testMovingPlatform.Draw(target);
+	for (size_t i = 0; i < platformVector.size(); i++)
+	{
+		platformVector[i]->Draw(target);
+	}
 	door.Draw(target);
 	player.Draw(target);
 }

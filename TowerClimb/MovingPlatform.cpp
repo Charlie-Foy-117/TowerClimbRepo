@@ -2,8 +2,8 @@
 #include "AssetManager.h"
 #include "VectorHelper.h"
 
-MovingPlatform::MovingPlatform(sf::Vector2f newPos1, sf::Vector2f newPos2)
-	: Platform()
+MovingPlatform::MovingPlatform(sf::Vector2f newPosition, sf::Vector2f newPos1, sf::Vector2f newPos2)
+	: Platform(newPosition)
 	, SPEED(100)
 	, POS1(newPos1)
 	, POS2(newPos2)
@@ -11,6 +11,7 @@ MovingPlatform::MovingPlatform(sf::Vector2f newPos1, sf::Vector2f newPos2)
 	, velocity(0, 0)
 {
 	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/MovingPlatform.png"));
+	SetPosition(newPosition);
 
 	sf::Vector2f vectorToNewTarget = *targetPoint - GetPosition();
 	vectorToNewTarget = VectorHelper::Normalise(vectorToNewTarget);

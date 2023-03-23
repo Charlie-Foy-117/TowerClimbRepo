@@ -2,9 +2,10 @@
 #include "Screen.h"
 #include "Player.h"
 #include "Door.h"
-#include "Platform.h"
-#include "MovingPlatform.h"
 #include <SFML/Graphics.hpp>
+
+class Platform;
+class Game;
 
 class LevelScreen :
     public Screen
@@ -18,9 +19,8 @@ public:
 
 private:
 
+    std::vector<Platform*> platformVector;
     Player player;
-    Platform testPlatform;
-    MovingPlatform testMovingPlatform;
     Door door;
 };
 

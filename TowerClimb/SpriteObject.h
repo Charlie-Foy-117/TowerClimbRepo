@@ -25,6 +25,10 @@ public:
 
 	sf::Vector2f GetCollisionDepth(SpriteObject other);
 
+	virtual void HandleCollision(SpriteObject& other);
+
+	void SetAlive(bool newAlive);
+
 protected:
 
 	sf::Sprite sprite;
@@ -32,6 +36,8 @@ protected:
 	sf::Vector2f collisionOffset;
 	sf::Vector2f collisionScale;
 	CollisionType collisionType;
+
+	bool alive;
 
 private:
 

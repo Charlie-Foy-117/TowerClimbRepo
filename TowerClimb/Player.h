@@ -9,7 +9,7 @@ public:
 
     void Update(sf::Time frameTime) override;
 
-    void HandleCollision(SpriteObject other);
+    void HandleCollision(SpriteObject& other) override;
 
 private:
     
