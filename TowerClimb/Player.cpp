@@ -12,7 +12,7 @@ enum class PhysicsType
 
 Player::Player()
 	: SpriteObject()
-	, prePosition(100, 300)
+	, twoFramesOldPosition(100, 300)
 	, velocity()
 	, acceleration()
 {
@@ -27,6 +27,8 @@ void Player::Update(sf::Time frameTime)
 {
 	const float DRAG = 10.0f;
 	const PhysicsType physics = PhysicsType::VELOCITY_VERLET;
+
+	sf::Vector2f lastFramePos = GetPosition();
 
 	switch (physics)
 	{
@@ -81,13 +83,9 @@ void Player::Update(sf::Time frameTime)
 			//Update acceleration
 			UpdateAcceleration();
 
-			sf::Vector2f lastFramePos = GetPosition();
-
 			//calculate current frames position
-			SetPosition(2.0f * GetPosition() - prePosition + acceleration * frameTime.asSeconds() * frameTime.asSeconds());
+			SetPosition(2.0f * GetPosition() - twoFramesOldPosition + acceleration * frameTime.asSeconds() * frameTime.asSeconds());
 
-			//two frames ago (for next frame)
-			prePosition = lastFramePos;
 		}
 		break;
 
@@ -115,6 +113,28 @@ void Player::Update(sf::Time frameTime)
 	default:
 		break;
 	}
+
+	//two frames ago (for next frame)
+	twoFramesOldPosition = lastFramePos;
+}
+
+void Player::HandleCollision(SpriteObject other)
+{
+	sf::Vector2f depth = GetCollisionDepth(other);
+	sf::Vector2f newPosition = GetPosition();
+
+	if (abs(depth.x) < abs(depth.y))
+	{
+		//move in x direction
+		newPosition.x += depth.x;
+	}
+	else
+	{
+		//move in y direction
+		newPosition.y += depth.y;
+	}
+
+	SetPosition(newPosition);
 }
 
 void Player::UpdateAcceleration()

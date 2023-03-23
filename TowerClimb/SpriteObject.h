@@ -23,6 +23,8 @@ public:
 	bool CheckCollision(SpriteObject other);
 	void SetColliding(bool newColliding);
 
+	sf::Vector2f GetCollisionDepth(SpriteObject other);
+
 protected:
 
 	sf::Sprite sprite;

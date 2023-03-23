@@ -9,12 +9,13 @@ public:
 
     void Update(sf::Time frameTime) override;
 
+    void HandleCollision(SpriteObject other);
 
 private:
     
     void UpdateAcceleration();
 
-    sf::Vector2f prePosition;
+    sf::Vector2f twoFramesOldPosition;
     sf::Vector2f velocity;
     sf::Vector2f acceleration;
 };
