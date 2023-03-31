@@ -201,6 +201,11 @@ void SpriteObject::SetAlive(bool newAlive)
 	alive = newAlive;
 }
 
+bool SpriteObject::GetAlive()
+{
+	return alive;
+}
+
 sf::Vector2f SpriteObject::GetCollisionCentre()
 {
 	sf::Vector2f centre = position;

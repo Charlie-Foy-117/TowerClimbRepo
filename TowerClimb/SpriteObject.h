@@ -28,6 +28,7 @@ public:
 	virtual void HandleCollision(SpriteObject& other);
 
 	void SetAlive(bool newAlive);
+	bool GetAlive();
 
 protected:
 

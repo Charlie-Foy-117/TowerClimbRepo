@@ -84,6 +84,7 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 void LevelScreen::TriggerEndState(bool win)
 {
 	gameRunning = false;
+	endPanel.WinLossPanel(player.GetAlive());
 	endPanel.StartAnimation();
 }
 
@@ -104,7 +105,7 @@ void LevelScreen::Restart()
 	platformVector.push_back(new Platform(sf::Vector2f(1200, 500)));
 	platformVector.push_back(new MovingPlatform(sf::Vector2f(300, 700), sf::Vector2f(300, 700), sf::Vector2f(1000, 700)));
 	platformVector.push_back(new BreakingPlatform(sf::Vector2f(500, 400)));
-	platformVector.push_back(new DeadlyPlatform(sf::Vector2f(700, 400)));
+	platformVector.push_back(new DeadlyPlatform(sf::Vector2f(700, 400), this));
 
 
 	door.SetPosition(1200, 350);

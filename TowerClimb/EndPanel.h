@@ -14,6 +14,7 @@ public:
 
 	void StartAnimation();
 	void ResetPosition();
+	void WinLossPanel(bool alive);
 
 private:
 

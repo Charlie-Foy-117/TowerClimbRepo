@@ -1,6 +1,7 @@
 #include "EndPanel.h"
 #include "AssetManager.h"
 #include "Easing.h"
+#include "SpriteObject.h"
 
 EndPanel::EndPanel(sf::RenderWindow* newWindow)
 	: background()
@@ -16,7 +17,6 @@ EndPanel::EndPanel(sf::RenderWindow* newWindow)
 
 	title.setFont(AssetManager::RequestFont("Assets/Fonts/mainFont.ttf"));
 	title.setCharacterSize(70);
-	title.setString("You Win!");
 	title.setFillColor(sf::Color::Black);
 
 	message.setFont(AssetManager::RequestFont("Assets/Fonts/mainFont.ttf"));
@@ -84,4 +84,16 @@ void EndPanel::ResetPosition()
 	float xPos = window->getSize().x / 2.0f - background.getGlobalBounds().width / 2.0f;
 	float yPos = window->getSize().y;
 	SetPosition(sf::Vector2f(xPos, yPos));
+}
+
+void EndPanel::WinLossPanel(bool alive)
+{
+	if (alive)
+	{
+		title.setString("You Win!");
+	}
+	if (!alive)
+	{
+		title.setString("You Lose");
+	}
 }
