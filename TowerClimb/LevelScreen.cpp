@@ -21,7 +21,7 @@ void LevelScreen::Update(sf::Time frameTime)
 {
 	if (gameRunning)
 	{
-
+		player.SetAlive(true);
 		player.Update(frameTime);
 
 		for (size_t i = 0; i < platformVector.size(); ++i)
