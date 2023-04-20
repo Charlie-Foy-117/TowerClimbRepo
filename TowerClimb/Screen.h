@@ -11,7 +11,7 @@ public:
 	virtual void Update(sf::Time frameTime);
 	virtual void Draw(sf::RenderTarget& target);
 
-private:
+protected:
 
 	Game* gamePointer;
 };

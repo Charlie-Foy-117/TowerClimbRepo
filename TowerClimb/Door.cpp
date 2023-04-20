@@ -14,6 +14,9 @@ Door::Door(LevelScreen* newLevelScreen)
 
 void Door::HandleCollision(SpriteObject& other)
 {
-	levelScreen->TriggerEndState(true);
+	if (!levelScreen->LoadNextLevel())
+	{
+		levelScreen->TriggerEndState(true);
+	}
 	SpriteObject::HandleCollision(other);
 }
