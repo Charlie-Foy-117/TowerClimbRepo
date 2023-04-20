@@ -13,6 +13,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, door(this)
 	, endPanel(newGamePointer->GetWindow())
 	, gameRunning(true)
+	, camera()
 {
 	Restart();
 }
@@ -63,6 +64,17 @@ void LevelScreen::Update(sf::Time frameTime)
 
 void LevelScreen::Draw(sf::RenderTarget& target)
 {
+	//update camera based on the render target size and player position
+	camera = target.getDefaultView();
+	sf::Vector2f cameraCentre = camera.getCenter();
+	cameraCentre.y = player.GetPosition().y - 100;
+	camera.setCenter(cameraCentre);
+
+	//update the render target to use the camera
+	target.setView(camera);
+
+	//draw world objects (ones that should use the camera)
+
 	for (size_t i = 0; i < platformVector.size(); i++)
 	{
 		platformVector[i]->Draw(target);
@@ -70,6 +82,10 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 	door.Draw(target);
 	player.Draw(target);
 
+	//for any ui reset the camera to the default view before drawing
+	target.setView(target.getDefaultView());
+
+	//draw UI objects (use the base view)
 	if (!gameRunning)
 	{
 		endPanel.Draw(target);
