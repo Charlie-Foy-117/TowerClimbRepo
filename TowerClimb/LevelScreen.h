@@ -29,7 +29,7 @@ private:
     Door door;
     EndPanel endPanel;
     bool gameRunning;
-    sf::Window window;
+    //sf::Window window;
 
     sf::View camera;
 };

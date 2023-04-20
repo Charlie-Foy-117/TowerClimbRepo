@@ -14,6 +14,7 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, endPanel(newGamePointer->GetWindow())
 	, gameRunning(true)
 	, camera()
+	//, window(newGamePointer->GetWindow())
 {
 	Restart();
 }
@@ -55,6 +56,12 @@ void LevelScreen::Update(sf::Time frameTime)
 			door.SetColliding(true);
 			door.HandleCollision(player);
 		}
+
+		//if (player.GetPosition().y > window.getPosition().y)
+		{
+		//	player.SetAlive(false);
+		//	TriggerEndState(false);
+		}
 	}
 	else
 	{
@@ -67,7 +74,7 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 	//update camera based on the render target size and player position
 	camera = target.getDefaultView();
 	sf::Vector2f cameraCentre = camera.getCenter();
-	cameraCentre.y = player.GetPosition().y - 100;
+	cameraCentre.y = player.GetPosition().y;
 	camera.setCenter(cameraCentre);
 
 	//update the render target to use the camera
