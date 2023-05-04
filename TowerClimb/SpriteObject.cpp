@@ -31,48 +31,48 @@ void SpriteObject::Draw(sf::RenderTarget& target)
 	{
 		switch (collisionType)
 		{
-		case CollisionType::CIRCLE:
-		{
-			sf::CircleShape circle;
-
-			sf::Vector2f shapePosition = GetCollisionCentre();
-			float circleRadius = GetCircleColliderRadius();
-			shapePosition.x -= circleRadius;
-			shapePosition.y -= circleRadius;
-
-			circle.setPosition(shapePosition);
-			circle.setRadius(circleRadius);
-			sf::Color collisionColour = sf::Color::Green;
-			//turn this red if a collision is occurring
-			if (colliding)
+			case CollisionType::CIRCLE:
 			{
-				collisionColour = sf::Color::Red;
+				sf::CircleShape circle;
+
+				sf::Vector2f shapePosition = GetCollisionCentre();
+				float circleRadius = GetCircleColliderRadius();
+				shapePosition.x -= circleRadius;
+				shapePosition.y -= circleRadius;
+
+				circle.setPosition(shapePosition);
+				circle.setRadius(circleRadius);
+				sf::Color collisionColour = sf::Color::Green;
+				//turn this red if a collision is occurring
+				if (colliding)
+				{
+					collisionColour = sf::Color::Red;
+				}
+				collisionColour.a = 100;
+				circle.setFillColor(collisionColour);
+
+				target.draw(circle);
 			}
-			collisionColour.a = 100;
-			circle.setFillColor(collisionColour);
+				break;
 
-			target.draw(circle);
-		}
-			break;
-
-		case CollisionType::AABB:
-		{
-			sf::RectangleShape rectangle;
-			sf::FloatRect bounds = GetAABB();
-			rectangle.setPosition(bounds.left, bounds.top);
-			rectangle.setSize(sf::Vector2f(bounds.width, bounds.height));
-			sf::Color collisionColour = sf::Color::Green;
-			//turn this red if a collision is occurring
-			if (colliding)
+			case CollisionType::AABB:
 			{
-				collisionColour = sf::Color::Red;
-			}
-			collisionColour.a = 100;
-			rectangle.setFillColor(collisionColour);
+				sf::RectangleShape rectangle;
+				sf::FloatRect bounds = GetAABB();
+				rectangle.setPosition(bounds.left, bounds.top);
+				rectangle.setSize(sf::Vector2f(bounds.width, bounds.height));
+				sf::Color collisionColour = sf::Color::Green;
+				//turn this red if a collision is occurring
+				if (colliding)
+				{
+					collisionColour = sf::Color::Red;
+				}
+				collisionColour.a = 100;
+				rectangle.setFillColor(collisionColour);
 
-			target.draw(rectangle);
-		}
-			break;
+				target.draw(rectangle);
+			}
+				break;
 		}
 	}
 }
